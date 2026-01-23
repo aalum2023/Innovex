@@ -1,0 +1,1 @@
+varAppMode = "edit" || varAppMode = "new" || IsBlank(varAppMode)

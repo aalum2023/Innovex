@@ -1,0 +1,45 @@
+Switch(
+    Param("mode"),
+    "admin",
+    scr_Admin
+);
+Set(
+    varnextid,
+    Flow_EDCR_GetLatestID.Run().nextid
+);
+Set(
+    HeaderFontColor,
+    RGBA(
+        255,
+        255,
+        255,
+        1
+    )
+);
+Set(
+    Applicationcolor,
+    RGBA(
+        62,
+        128,
+        149,
+        1
+    )
+);
+Set(
+    VarAppURL,
+    First(PowerAppsforMakers.GetAppVersions("41098d60-18b4-40b7-a638-d240470c3351").value).properties.appDefinition.properties.appOpenUri
+);
+Set(
+    varAppBaseUrl,
+   // "https://apps.powerapps.com/play/e/4ceee6f2-0e81-e177-8682-fc16fefe3d01/a/6ff01b1f-78fd-403e-b728-84b8ba1ea5e8"
+    First(
+        Split(
+            VarAppURL,
+            "?"
+        )
+    ).Value
+);
+Set(
+    varFlag,
+    "PROD"
+);
