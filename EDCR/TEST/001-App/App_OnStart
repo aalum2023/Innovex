@@ -23,7 +23,7 @@ Set(
 );
 Set(
 VarAppURL,
-First(PowerAppsforMakers.GetAppVersions("6ff01b1f-78fd-403e-b728-84b8ba1ea5e8").value).properties.appDefinition.properties.appOpenUri
+First(PowerAppsforMakers.GetAppVersions("6fc7d630-73a3-4ffc-abdc-7981c07716e3").value).properties.appDefinition.properties.appOpenUri
 );
 Set(
     varAppBaseUrl,
