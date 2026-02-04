@@ -1,0 +1,1 @@
+Set(VarItem,ThisItem);Navigate(scr_AdminEdit,ScreenTransition.CoverRight);
