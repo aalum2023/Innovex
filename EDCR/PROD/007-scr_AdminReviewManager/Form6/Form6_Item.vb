@@ -1,0 +1,1 @@
+LookUp(ReviewingManager, EDCRNumber.Value=VarItem.EDCRNumber)
