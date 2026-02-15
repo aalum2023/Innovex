@@ -1,1 +1,0 @@
-Navigate(scr_Admin,ScreenTransition.Cover)
