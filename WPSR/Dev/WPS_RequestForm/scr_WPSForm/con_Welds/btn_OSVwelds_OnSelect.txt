@@ -1,0 +1,26 @@
+Collect(
+    colOSVWeldDetails,
+    {
+        ID: "",
+        OSVWPS: "",
+        OSVWPSRevision: "",
+        WPSID: DataCardValue2.Value,
+        WELD_NUMBER: "",
+        PART_NO1: "",
+        DESCRIPTION1: "",
+        THICKNESS1: "",
+        PIPE_DIAMETER1: "",
+        DQM1: "",
+        MATERIAL1: "",
+        TEMPER_TEMP1: "",
+        // NACE: false,
+        PART_NO2: "",
+        DESCRIPTION2: "",
+        THICKNESS2: "",
+        PIPE_DIAMETER2: "",
+        DQM2: "",
+        MATERIAL2: "",
+        TEMPER_TEMP2: "",
+        Comments:""
+    }
+)

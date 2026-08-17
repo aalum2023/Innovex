@@ -1,0 +1,5 @@
+If(
+    varSelectedTab = Max(CountRows(colTabItems)),
+    false,
+    true
+)

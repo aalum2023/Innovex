@@ -1,0 +1,19 @@
+//!IsBlank(varWPSID) && !IsBlank(varAppMode) && varRequestType = "Outside Vendor"
+
+!IsBlank(varWPSID) && !IsBlank(varAppMode) && DataCardValue1.Selected.Value = "Outside Vendor"
+
+
+//varAppMode = "edit" || varAppMode = "approval" && DataCardValue1.Selected.Value = "Outside Vendor"
+//true
+/*If(
+    !IsBlank(varWPSID),
+    true,
+    false
+) && DataCardValue1.Selected.Value = "Outside Vendor"
+*/
+/*varRequestType = "Outside Vendor" && DataCardValue1.Selected.Value = "Outside Vendor" && If(
+    IsBlank(varWPSID),
+    true,
+    false
+)*/
+//DataCardValue1.Selected.Value = "Outside Vendor"

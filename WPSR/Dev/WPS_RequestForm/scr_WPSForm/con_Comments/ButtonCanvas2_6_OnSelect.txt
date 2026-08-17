@@ -1,0 +1,5 @@
+ResetForm('form_WPSRequest_NEW+EDIT');
+ResetForm(Form_Comments);
+Clear(colWeldDetails);
+Clear(colOSVWeldDetails);
+Reset(DataCardValue5);

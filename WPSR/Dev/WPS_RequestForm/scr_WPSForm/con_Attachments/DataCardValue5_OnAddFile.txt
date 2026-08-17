@@ -1,0 +1,10 @@
+ClearCollect(
+    colUploadAttachment,
+    ForAll(
+        DataCardValue5.Attachments,
+        {
+            FileName: Name,
+            FileContent: JSON(Value, JSONFormat.IncludeBinaryData)  // converts to Base64
+        }
+    )
+);

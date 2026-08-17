@@ -1,0 +1,30 @@
+/*Patch(
+    WPSOSVwelds,// <-- Replace with your actual list name
+    Defaults(WPSOSVwelds),
+    {
+        WPSID: DataCardValue2.Value,
+        OSVWPS: TextInputCanvas1.Value,
+        OSVWPSRevision: TextInputCanvas2.Value,
+        WeldNumber: TextInputCanvas2_22.Value,
+        NACE: DropdownCanvas2_1.Selected.Value,
+        PARTNO1: TextInputCanvas2_61.Value,
+        DESCRIPTION1: TextInputCanvas2_62.Value,
+        THICKNESS1: TextInputCanvas2_62.Value,
+        PIPEDIAMETER1: TextInputCanvas2_64.Value,
+        DQM1: TextInputCanvas2_65.Value,
+        MATERIAL1: TextInputCanvas2_66.Value,
+        'TEMPERTEMP1(F)': TextInputCanvas2_67.Value,
+        'PARTNO.2': TextInputCanvas2_68.Value,
+        DESCRIPTION2: TextInputCanvas2_69.Value,
+        THICKNESS2: TextInputCanvas4_1.Value,
+        PIPEDIAMETER2: TextInputCanvas5_1.Value,
+        DQM2: TextInputCanvas2_70.Value,
+        MATERIAL2: TextInputCanvas2_71.Value,
+        'TEMPERTEMP2(F)': TextInputCanvas2_72.Value
+       //
+    }
+);*/
+Notify(
+    "✅ OSV Weld details saved successfully.",
+    NotificationType.Success
+)

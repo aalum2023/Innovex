@@ -1,0 +1,4 @@
+Set(
+    varSelectedTab,
+    varSelectedTab - 1
+)

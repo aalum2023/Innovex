@@ -1,0 +1,80 @@
+Set(
+    varSelectedTab,
+    1
+);
+
+////////////////////////////////////////
+Set(
+    varApplicationcolor,
+    RGBA(
+        62,
+        128,
+        149,
+        1
+    )
+);
+Set(
+    varwhitecolor,
+    RGBA(
+        255,
+        255,
+        255,
+        1
+    )
+);
+ClearCollect(
+    colTabItems,
+    [
+        {
+            Id: 1,
+            Value: "Request Information"
+        },
+        {
+            Id: 2,
+            Value: "Welds"
+        },
+        {
+            Id: 3,
+            Value: "Attachments"
+        },
+        {
+            Id: 4,
+            Value: "Comments"
+        }
+    ]
+);
+
+// welds section 
+ClearCollect(
+    colWeldDetails,
+    {
+        WELD_NUMBER: "",
+        PART_NO: "",
+        DESCRIPTION1: "",
+        THICKNESS: "",
+        PIPE_DIA: "",
+        DRM: "",
+        MATERIAL1: "",
+        TEMPER_TEMP: ""
+        /*,
+        OSVWPS: "",
+        OSVWPSREVISION: "*/
+    }
+);
+
+// welds external section 
+ClearCollect(
+    colOSVWeldDetails,
+    {
+        WELD_NUMBER: "",
+        PART_NO: "",
+        DESCRIPTION1: "",
+        THICKNESS: "",
+        PIPE_DIA: "",
+        DRM: "",
+        MATERIAL1: "",
+        TEMPER_TEMP: "",
+        OSVWPS: "",
+        OSVWPSREVISION: ""
+    }
+)

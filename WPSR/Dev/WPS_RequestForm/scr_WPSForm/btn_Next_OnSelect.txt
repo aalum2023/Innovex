@@ -1,0 +1,19 @@
+Set(
+    varSelectedTab,
+    varSelectedTab + 1
+)
+
+
+
+//// commented for old code
+/*If(
+    form_WPSRequest.Valid,
+    Set(
+        varSelectedTab,
+        varSelectedTab + 1
+    ),
+    Notify(
+        "❌ Please fill all required fields before continuing.",
+        NotificationType.Error
+    )
+)*/

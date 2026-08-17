@@ -1,0 +1,5 @@
+If(
+    !IsBlank(Param("wpsid")),
+    scr_WPSForm,  // Screen that loads the multi-tab form
+    scr_Home
+)

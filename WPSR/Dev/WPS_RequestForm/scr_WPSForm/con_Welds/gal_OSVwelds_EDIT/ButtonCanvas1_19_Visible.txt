@@ -1,0 +1,2 @@
+varAppMode <> "approval"
+//true

@@ -1,0 +1,8 @@
+colComments
+
+/*If(
+    !IsBlank(varWPSID),
+    Filter(WPSComments, WPSID = varWPSID),
+    Blank()
+)
+*/

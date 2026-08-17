@@ -1,0 +1,4 @@
+IsBlank(varWPSID) && IsBlank(varAppMode) && varRequestType = "Internal"
+
+//IsBlank(varWPSID) && IsBlank(varAppMode) && DataCardValue1.Selected.Value = "Internal"
+//varRequestType = "Internal" && DataCardValue1.Selected.Value = "Internal"

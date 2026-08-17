@@ -1,0 +1,7 @@
+If(
+    Hour(Now()) < 12,
+    "  Good Morning,  ",
+    Hour(Now()) < 17,
+    "   Good Afternoon,  ",
+    "   Good Evening,   "
+) & User().FullName

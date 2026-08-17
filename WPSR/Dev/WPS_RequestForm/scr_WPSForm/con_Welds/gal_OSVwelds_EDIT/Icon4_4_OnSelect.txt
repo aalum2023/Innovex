@@ -1,0 +1,10 @@
+Patch(
+    WPSOSVwelds,
+    LookUp(WPSOSVwelds, ID = ThisItem.ID),
+    {
+        WPSID: DataCardValue2.Value,
+        OSVWPS: TextInputCanvas1_1.Value,
+        OSVWPSRevision: TextInputCanvas2_1.Value
+    }
+);
+Notify("OSV Weld details updated successfully!", NotificationType.Success);

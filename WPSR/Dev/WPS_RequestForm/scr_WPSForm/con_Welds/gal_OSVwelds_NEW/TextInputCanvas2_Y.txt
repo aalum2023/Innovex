@@ -1,0 +1,1 @@
+TextInputCanvas2_71.Y + TextInputCanvas2_71.Height + 60

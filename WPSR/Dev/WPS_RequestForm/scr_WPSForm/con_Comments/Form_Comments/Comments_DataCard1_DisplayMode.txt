@@ -1,0 +1,2 @@
+If(varAppMode = "approval", DisplayMode.Edit, DisplayMode.Edit)
+//Parent.DisplayMode

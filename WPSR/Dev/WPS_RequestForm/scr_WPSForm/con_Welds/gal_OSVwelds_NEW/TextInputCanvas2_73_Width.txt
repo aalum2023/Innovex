@@ -1,0 +1,1 @@
+Parent.Width * 75/100

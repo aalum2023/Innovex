@@ -1,0 +1,11 @@
+If(
+    varAppMode = "approval",
+    DisplayMode.Edit,              // Read-only
+    If(
+        varAppMode = "edit",
+        DisplayMode.Edit,           // Editable
+        DisplayMode.Disabled        // All other modes
+    )
+)
+
+//DisplayMode.Edit

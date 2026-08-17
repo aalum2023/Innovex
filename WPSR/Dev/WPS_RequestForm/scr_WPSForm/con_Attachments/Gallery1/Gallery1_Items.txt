@@ -1,0 +1,6 @@
+colAttachments
+/*If(
+    !IsBlank(varWPSID),
+    Filter(WPSAttachments, WPSID = varWPSID),
+    Blank()
+)*/

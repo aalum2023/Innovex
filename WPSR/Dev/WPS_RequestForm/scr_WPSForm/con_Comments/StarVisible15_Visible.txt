@@ -1,0 +1,5 @@
+If(
+    varAppMode = "edit",
+    true,
+    false
+)

@@ -1,0 +1,20 @@
+
+Set(
+    varExternalVisiblefeilds,
+    true
+);
+// When user clicks the Start Form button
+Set(
+    flowResponse,
+    Flow_WPS_GetLatestID.Run()
+);
+Set(
+    newWPSID,
+    flowResponse.nextid
+);
+Set(
+    varRequestType,
+    "Outside Vendor"
+);
+Navigate(scr_WPSForm);
+TabList_Internal.Selected.Value="Request Information"

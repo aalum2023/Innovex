@@ -1,0 +1,20 @@
+Set(
+    varExternalVisiblefeilds,
+    false
+);
+Set(
+    varRequestType,
+    "Internal"
+);
+TabList_Internal.Selected.Value = "Request Information";
+// Step 1: Get the max sequence number
+// When user clicks the Start Form button
+Set(
+    flowResponse,
+    Flow_WPS_GetLatestID.Run()
+);
+Set(
+    newWPSID,
+    flowResponse.nextid
+);
+Navigate(scr_WPSForm);

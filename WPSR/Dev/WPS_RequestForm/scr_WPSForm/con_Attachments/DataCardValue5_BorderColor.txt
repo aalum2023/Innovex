@@ -1,0 +1,1 @@
+//If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)

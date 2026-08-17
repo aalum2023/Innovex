@@ -1,0 +1,293 @@
+
+// 🔹 NEW / EDIT MODE VALIDATION + SUBMISSION
+If(
+    // --- 1️⃣ Attachment check in NEW mode ---
+    'form_WPSRequest_NEW+EDIT'.Mode = FormMode.New && IsEmpty(DataCardValue5.Attachments),
+    Notify(
+        "❌ Attachment is required before submission.",
+        NotificationType.Error
+    ),
+    // --- 2️⃣ Main validation checks ---
+    With(
+        {
+            _isValidWPS: 'form_WPSRequest_NEW+EDIT'.Valid,
+            _isValidComments: Form_Comments.Valid
+        },
+        If(
+            !_isValidWPS || !_isValidComments,
+            Notify(
+                "❌ Please fill all required fields before submitting.",
+                NotificationType.Error
+            ),
+            // --- 3️⃣ When both forms are valid ---
+            With(
+                {
+                    fileResult: ForAll(
+                        DataCardValue5.Attachments As FILE,
+                        Flow_WPS_FileUpload.Run(
+                            DataCardValue2.Value,
+                            {
+                                file: {
+                                    contentBytes: FILE.Value,
+                                    name: FILE.Name
+                                }
+                            }
+                        )
+                    )
+                },
+                Set(
+                    varFile,
+                    fileResult
+                );
+                // ✅ Submit forms after file upload
+SubmitForm('form_WPSRequest_NEW+EDIT');
+                SubmitForm(Form_Comments);
+                Notify(
+                    "✅ WPS Request submitted successfully.",
+                    NotificationType.Success
+                );
+                // --- 🔹 INTERNAL / OSV weld logic ---
+If(
+                    // --- INTERNAL WELDS ---
+                    IsBlank(varWPSID) && IsBlank(varAppMode) && varRequestType = "Internal",
+                    ForAll(
+                        gal_Internalwelds_NEW.AllItems,
+                        Patch(
+                            WPSInternalWelds,
+                            Defaults(WPSInternalWelds),
+                            {
+                                WPSID: DataCardValue2.Value,
+                                WeldNumber: Int(TextInputCanvas2_21.Value),
+                                PARTNO1: TextInputCanvas2_49.Value,
+                                DESCRIPTION1: TextInputCanvas2_50.Value,
+                                'THICKNESS1 ': TextInputCanvas2_51.Value,
+                                'PIPEDIAMETER1 ': TextInputCanvas2_52.Value,
+                                DQM1: TextInputCanvas2_53.Value,
+                                MATERIAL1: TextInputCanvas2_54.Value,
+                                'TEMPERTEMP1(F)': TextInputCanvas2_55.Value,
+                                NACE: DropdownCanvas2.Selected.Value,
+                                'PARTNO.2 ': TextInputCanvas2_56.Value,
+                                'DESCRIPTION2 ': TextInputCanvas2_57.Value,
+                                'THICKNESS2 ': TextInputCanvas4.Value,
+                              /* PIPEDIAMETER2: TextInputCanvas5.Value, */
+                                PIPEDIAMETER2: TextInputCanvas2_90.Value,
+                                'DQM2 ': TextInputCanvas2_58.Value,
+                                'MATERIAL2 ': TextInputCanvas2_59.Value,
+                                'TEMPERTEMP2(F)': TextInputCanvas2_60.Value
+                                /*'OSVWPS': TextInputCanvas1.Value,
+                                'OSVWPSREVISION': TextInputCanvas2.Value
+                                */
+                                
+                            }
+                        )
+                    );
+                    Notify(
+                        "✅ All Internal Welds saved successfully!",
+                        NotificationType.Success
+                    ),
+                    // --- OUTSIDE VENDOR WELDS ---
+                    IsBlank(varWPSID) && IsBlank(varAppMode) && varRequestType = "Outside Vendor",
+                    ForAll(
+                        gal_OSVwelds_NEW.AllItems,
+                        Patch(
+                            WPSOSVwelds,
+                            Defaults(WPSOSVwelds),
+                            {
+                                WPSID: DataCardValue2.Value,
+                                OSVWPS: TextInputCanvas1.Value,
+                                OSVWPSRevision: TextInputCanvas2.Value,
+                                WeldNumber: TextInputCanvas2_22.Value,
+                                NACE: DropdownCanvas2_1.Selected.Value,
+                                PARTNO1: TextInputCanvas2_61.Value,
+                                DESCRIPTION1: TextInputCanvas2_62.Value,
+                                THICKNESS1: TextInputCanvas2_63.Value,
+                                PIPEDIAMETER1: TextInputCanvas2_64.Value,
+                                DQM1: TextInputCanvas2_65.Value,
+                                MATERIAL1: TextInputCanvas2_66.Value,
+                                'TEMPERTEMP1(F)': TextInputCanvas2_67.Value,
+                                'PARTNO.2': TextInputCanvas2_68.Value,
+                                DESCRIPTION2: TextInputCanvas2_69.Value,
+                                THICKNESS2: TextInputCanvas4_1.Value,
+                                PIPEDIAMETER2: TextInputCanvas5_1.Value,
+                                DQM2: TextInputCanvas2_70.Value,
+                                MATERIAL2: TextInputCanvas2_71.Value,
+                                'TEMPERTEMP2(F)': TextInputCanvas2_72.Value
+                            }
+                        )
+                    );
+                    Notify(
+                        "✅ All Outside Vendor Welds saved successfully!",
+                        NotificationType.Success
+                    )
+                );
+                // --- 🔹 Final cleanup ---
+ResetForm('form_WPSRequest_NEW+EDIT');
+                ResetForm(Form_Comments);
+                Clear(colWeldDetails);
+                Clear(colOSVWeldDetails);
+                Reset(DataCardValue5);
+                Navigate(scr_Home)
+            )
+        )
+    )
+);
+// old code
+/*
+    // 🔹 New/Edit mode - your existing logic
+If(
+        // Attachment required only in NEW mode
+    'form_WPSRequest_NEW+EDIT'.Mode = FormMode.New && IsEmpty(DataCardValue5.Attachments),
+    Notify(
+        "❌ Attachment is required before submission.",
+        NotificationType.Error
+    ),
+    With(
+        {
+            _isValidWPS: 'form_WPSRequest_NEW+EDIT'.Valid,
+            _isValidComments: Form_Comments.Valid
+        },
+        If(
+            !_isValidWPS || !_isValidComments,
+            Notify(
+                "❌ Please fill all required fields before submitting.",
+                NotificationType.Error
+            ),
+            With(
+                {
+                    fileResult: WPSFileUpload.Run(
+                        DataCardValue2.Value,
+                        Last(DataCardValue5.Attachments).Name,
+                        {
+                            contentBytes: Last(DataCardValue5.Attachments).Value,
+                            name: Last(DataCardValue5.Attachments).Name
+                        }
+                    )
+                },
+                Set(
+                    varFile,
+                    fileResult
+                );
+                // Only submit when both forms are valid
+                SubmitForm('form_WPSRequest_NEW+EDIT');
+                SubmitForm(Form_Comments);
+                Notify(
+                    "✅ WPS Request submitted successfully.",
+                    NotificationType.Success
+                );
+                ResetForm('form_WPSRequest_NEW+EDIT');
+                ResetForm(Form_Comments);
+                Clear(colWeldDetails);
+                Clear(colOSVWeldDetails);
+                Reset(DataCardValue5);
+                Navigate(scr_Home)
+            )
+        )
+    )
+);
+/// New Welds Logic written for Dusty Change Request below code:
+If(
+    // --- INTERNAL WELDS CONDITION ---
+    IsBlank(varWPSID) && IsBlank(varAppMode) && varRequestType = "Internal",
+    // --- Run Internal Weld Patch ---
+    ForAll(
+        gal_Internalwelds_NEW.AllItems,
+        Patch(
+            WPSInternalWelds,
+            Defaults(WPSInternalWelds),
+            {
+                WPSID: DataCardValue2.Value,
+                WeldNumber: Int(TextInputCanvas2_21.Value),
+                PARTNO1: TextInputCanvas2_49.Value,
+                DESCRIPTION1: TextInputCanvas2_50.Value,
+                THICKNESS1: TextInputCanvas2_51.Value,
+                PIPEDIAMETER1: TextInputCanvas2_52.Value,
+                DQM1: TextInputCanvas2_53.Value,
+                MATERIAL1: TextInputCanvas2_54.Value,
+                'TEMPERTEMP1(F)': TextInputCanvas2_55.Value,
+                NACE: DropdownCanvas2.Selected.Value,
+                'PARTNO.2': TextInputCanvas2_56.Value,
+                DESCRIPTION2: TextInputCanvas2_57.Value,
+                THICKNESS2: TextInputCanvas4.Value,
+                PIPEDIAMETER2: TextInputCanvas5.Value,
+                DQM2: TextInputCanvas2_58.Value,
+                MATERIAL2: TextInputCanvas2_59.Value,
+                'TEMPERTEMP2(F)': TextInputCanvas2_60.Value
+            }
+        )
+    );
+    Notify("All Internal Welds saved successfully!", NotificationType.Success),
+    // --- OUTSIDE VENDOR CONDITION ---
+    IsBlank(varWPSID) && IsBlank(varAppMode) && varRequestType = "Outside Vendor",
+    // --- Run OSV Weld Patch ---
+    ForAll(
+        gal_OSVwelds_NEW.AllItems,
+        Patch(
+            WPSOSVwelds,
+            Defaults(WPSOSVwelds),
+            {
+                WPSID: DataCardValue2.Value,
+                OSVWPS: TextInputCanvas1.Value,
+                OSVWPSRevision: TextInputCanvas2.Value,
+                WeldNumber: TextInputCanvas2_22.Value,
+                NACE: DropdownCanvas2_1.Selected.Value,
+                PARTNO1: TextInputCanvas2_61.Value,
+                DESCRIPTION1: TextInputCanvas2_62.Value,
+                THICKNESS1: TextInputCanvas2_63.Value,
+                PIPEDIAMETER1: TextInputCanvas2_64.Value,
+                DQM1: TextInputCanvas2_65.Value,
+                MATERIAL1: TextInputCanvas2_66.Value,
+                'TEMPERTEMP1(F)': TextInputCanvas2_67.Value,
+                'PARTNO.2': TextInputCanvas2_68.Value,
+                DESCRIPTION2: TextInputCanvas2_69.Value,
+                THICKNESS2: TextInputCanvas4_1.Value,
+                PIPEDIAMETER2: TextInputCanvas5_1.Value,
+                DQM2: TextInputCanvas2_70.Value,
+                MATERIAL2: TextInputCanvas2_71.Value,
+                'TEMPERTEMP2(F)': TextInputCanvas2_72.Value
+            }
+        )
+    );
+    Notify("All Outside Vendor Welds saved successfully!", NotificationType.Success)
+)
+
+/*
+If(
+    IsEmpty(DataCardValue5.Attachments),
+    Notify(
+        "❌ Attachment is required before submission.",
+        NotificationType.Error
+    ),
+    If(
+        !'form_WPSRequest_NEW+EDIT'.Valid || !Form_Comments.Valid,
+        Notify(
+            "❌ Please fill all the required fields before submitting.",
+            NotificationType.Error
+        ),
+        // If attachment exists AND both forms are valid, proceed
+        With(
+            {
+                fileResult: WPSFileUpload.Run(
+                    DataCardValue2.Value,
+                    Last(DataCardValue5.Attachments).Name,
+                    {
+                        contentBytes: Last(DataCardValue5.Attachments).Value,
+                        name: Last(DataCardValue5.Attachments).Name
+                    }
+                )
+            },
+            Set(varFile, fileResult);
+            Notify(
+                "✅ WPS Request submitted successfully.",
+                NotificationType.Success
+            );
+            ResetForm('form_WPSRequest_NEW+EDIT');
+            ResetForm(Form_Comments);
+            Clear(colWeldDetails);
+            Clear(colOSVWeldDetails);
+            Reset(DataCardValue5);
+            Navigate(scr_Home)
+        )
+    )
+)
+*/
+//////////

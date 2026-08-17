@@ -1,0 +1,109 @@
+// === Simulate deep link params when running in Studio ===
+If(
+    !IsBlank(Param("mode")) || !IsBlank(Param("wpsid")),
+    // Running from real deep link → use actual params//
+    Set(
+        varWPSID,
+        If(
+            IsBlank(Param("wpsid")),
+            "WPSR-1507",// Test value if no param found
+            Param("wpsid")
+        )
+    );
+    Set(
+        varAppMode,
+        Lower(Param("mode"))// Expected: "edit" or "approval"
+    );
+    // Default to "new" if mode is blank
+If(
+        IsBlank(varAppMode),
+        Set(
+            varAppMode,
+            "new"
+        )
+    ),
+    // Running manually in Studio → set test values here
+    Set(
+        varWPSID,
+        ""
+    );
+    Set(
+        varAppMode,
+        ""
+    )// change to "new", "edit", or "approval"
+);
+
+
+
+// Capture WPS ID from URL parameter
+// Capture WPS ID (with test fallback)
+/*Set(
+    varWPSID,
+    If(
+        IsBlank(Param("wpsid")),
+        "WPSR-1508",   // Test value if no param found
+        Param("wpsid")
+    )
+);
+// Capture App Mode from URL param
+Set(
+    varAppMode,
+    Lower(Param("mode")) // Expected: "edit" or "approval"
+);
+// Default to "new" if mode is blank
+If(
+    IsBlank(varAppMode),
+    Set(varAppMode, "new")
+);
+*/
+/*Set(
+    varWPSID,
+    Param("wpsid")
+);*/
+
+
+// Load all related data for this WPS ID
+Concurrent(
+    // Request Info
+    Set(
+        varRequestInfo,
+        LookUp(
+            WPSRequest,
+            WPSID = varWPSID
+        )
+    ),
+    // Attachments
+    ClearCollect(
+        colAttachments,
+        Filter(
+            WPSAttachments,
+            WPSID = varWPSID
+        )
+    ),
+    // Comments
+    ClearCollect(
+        colComments,
+        Filter(
+            WPSComments,
+            WPSID = varWPSID
+        )
+    )
+);
+If(
+    varAppMode = "edit" || varAppMode = "approval",
+    ClearCollect(
+        colWeldDetailsEdit1,
+        Filter(
+            WPSInternalWelds,
+            WPSID = varWPSID
+        )
+    );
+    ClearCollect(
+        colWPSOSVWeldsEdit,
+        Filter(
+            WPSOSVwelds,
+            WPSID = varWPSID
+        )
+    )
+)
+

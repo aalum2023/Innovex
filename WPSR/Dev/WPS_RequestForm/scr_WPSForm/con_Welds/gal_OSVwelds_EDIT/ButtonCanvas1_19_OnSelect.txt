@@ -1,0 +1,3 @@
+//Remove(WPSOSVwelds, ThisItem); - Access issue - Its a read only unable to perform the delete action
+Remove(colWPSOSVWeldsEdit, ThisItem);
+Notify("OSV Weld deleted successfully.", NotificationType.Success);
